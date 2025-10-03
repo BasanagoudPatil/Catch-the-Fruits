@@ -19,21 +19,25 @@
     overflow: hidden;
   }
   #basket {
-  position: absolute;
-  bottom: 20px;            /* keep it above mobile browser bars */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 15vw;             /* responsive width (15% of screen) */
-  max-width: 100px;        /* don’t get too big */
-  min-width: 60px;         /* don’t get too small */
-  height: 50px;
-  background: saddlebrown;
-  border-radius: 0 0 40px 40px;
-}
-
+    position: absolute;
+    bottom: 5vh;              /* stay visible above browser bar */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20vw;              /* responsive width */
+    height: 8vh;              /* responsive height */
+    max-width: 120px;         /* safe for big screens */
+    min-width: 60px;          /* safe for small screens */
+    max-height: 70px;
+    min-height: 40px;
+    background: saddlebrown;
+    border-radius: 0 0 40px 40px;
+    z-index: 10;
+  }
   .fruit {
     position: absolute;
-    font-size: 32px;
+    font-size: 6vw;           /* scale fruit with screen */
+    min-font-size: 24px;
+    max-font-size: 40px;
   }
   #scoreBoard {
     position: absolute;
@@ -58,6 +62,7 @@
     justify-content:center;
     align-items:center;
     display: none;
+    z-index: 20;
   }
   #restartBtn {
     margin-top: 20px;
@@ -92,7 +97,7 @@ const fruits = ["🍎","🍌","🍊","🍇","🍉"];
 let score = 0;
 let misses = 0;
 let gameInterval;
-let basketX = window.innerWidth/2 - 40; // basket starting pos
+let basketX = window.innerWidth/2 - basket.offsetWidth/2;
 let basketSpeed = 20;
 let isGameOver = false;
 
@@ -159,7 +164,7 @@ function startGame() {
   isGameOver = false;
   scoreBoard.innerText = `Score: ${score} | Misses: ${misses}`;
   gameOverScreen.style.display = "none";
-  basketX = window.innerWidth/2 - 40;
+  basketX = window.innerWidth/2 - basket.offsetWidth/2;
   basket.style.left = basketX + "px";
   gameInterval = setInterval(spawnFruit, 1200);
 }
@@ -204,9 +209,8 @@ restartBtn.addEventListener("click", () => {
 
 window.addEventListener("resize", () => {
   if (basketX > window.innerWidth - basket.offsetWidth) {
-    basketX = Math.min(window.innerWidth - basket.offsetWidth, Math.max(0, basketX));
-basket.style.left = basketX + "px";
-
+    basketX = window.innerWidth - basket.offsetWidth;
+    basket.style.left = basketX + "px";
   }
 });
 
