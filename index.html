@@ -5,82 +5,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catch the Fruits 🍎🍌🍊</title>
 <style>
-  body {
-    margin: 0;
-    background: linear-gradient(to bottom, #a2d4ff, #f9f9f9);
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-    touch-action: none;
-  }
-  #game {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-  #basket {
-    position: absolute;
-    bottom: 5vh;              /* stay visible above browser bar */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20vw;              /* responsive width */
-    height: 8vh;              /* responsive height */
-    max-width: 120px;         /* safe for big screens */
-    min-width: 60px;          /* safe for small screens */
-    max-height: 70px;
-    min-height: 40px;
-    background: saddlebrown;
-    border-radius: 0 0 40px 40px;
-    z-index: 10;
-  font-size: 6vh; /* scales with screen height */
-    line-height: 1;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #a2d4ff, #f9f9f9);
+  touch-action: none;
+}
 
-  }
-  .fruit {
-    position: absolute;
-    font-size: 6vw;           /* scale fruit with screen */
-    min-font-size: 24px;
-    max-font-size: 40px;
-  }
-  #scoreBoard {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-    background: rgba(255,255,255,0.8);
-    padding: 5px 10px;
-    border-radius: 8px;
-  }
-  #gameOver {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    font-size: 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items:center;
-    display: none;
-    z-index: 20;
-  }
-  #restartBtn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: orange;
-    border: none;
-    border-radius: 8px;
-    font-size: 20px;
-    cursor: pointer;
-  }
+#game {
+  position: relative;
+  width: 100%;
+  height: 100vh;       /* Full screen */
+  background: linear-gradient(to bottom, #aee1f9, #ffffff);
+  overflow: hidden;    /* Prevent overflow below basket */
+}
+
+#basket {
+  position: absolute;
+  bottom: 7vh;           /* Basket sits at dead end */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20vw;
+  height: 8vh;
+  max-width: 120px;
+  min-width: 60px;
+  max-height: 70px;
+  min-height: 40px;
+  background: saddlebrown;
+  border-radius: 0 0 40px 40px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.fruit {
+  position: absolute;
+  font-size: clamp(24px, 6vw, 40px);  /* Scales between 24px–40px */
+}
+
+#scoreBoard {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  background: rgba(255,255,255,0.8);
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+#gameOver {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  display: none;
+  z-index: 20;
+}
+
+#restartBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: orange;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Optional ground strip */
+#ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background: #3d7a3d;
+  z-index: 5;
+}
 </style>
 </head>
 <body>
 <div id="game">
   <div id="basket"></div>
+  <div id="ground"></div>
   <div id="scoreBoard">Score: 0 | Misses: 0</div>
   <div id="gameOver">
     <div id="finalScore">Game Over</div>
