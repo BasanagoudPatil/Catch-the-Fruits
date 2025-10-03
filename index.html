@@ -19,15 +19,18 @@
     overflow: hidden;
   }
   #basket {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 50px;
-    background: saddlebrown;
-    border-radius: 0 0 40px 40px;
-  }
+  position: absolute;
+  bottom: 20px;            /* keep it above mobile browser bars */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15vw;             /* responsive width (15% of screen) */
+  max-width: 100px;        /* don’t get too big */
+  min-width: 60px;         /* don’t get too small */
+  height: 50px;
+  background: saddlebrown;
+  border-radius: 0 0 40px 40px;
+}
+
   .fruit {
     position: absolute;
     font-size: 32px;
@@ -201,8 +204,9 @@ restartBtn.addEventListener("click", () => {
 
 window.addEventListener("resize", () => {
   if (basketX > window.innerWidth - basket.offsetWidth) {
-    basketX = window.innerWidth - basket.offsetWidth;
-    basket.style.left = basketX + "px";
+    basketX = Math.min(window.innerWidth - basket.offsetWidth, Math.max(0, basketX));
+basket.style.left = basketX + "px";
+
   }
 });
 
